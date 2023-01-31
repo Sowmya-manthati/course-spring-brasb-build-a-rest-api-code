@@ -42,6 +42,17 @@ public class CashCardController {
         return ResponseEntity.created(locationOfNewCashCard).build();
     }
 
+    @PutMapping
+    private ResponseEntity<Void> putCashCard(@RequestBody CashCard newCashCardRequest, Principal principal) {
+        CashCard cashCard = cashCardRepository.findByIdAndOwner(newCashCardRequest.id(), principal.getName());
+        if (cashCard != null) {
+            CashCard updatedCashCard = new CashCard(cashCard.id(), newCashCardRequest.amount(), principal.getName());
+            cashCardRepository.save(updatedCashCard);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @GetMapping
     public ResponseEntity<Collection<CashCard>> findAll(Pageable pageable, Principal principal) {
         Page<CashCard> page = cashCardRepository.findByOwner(principal.getName(),
