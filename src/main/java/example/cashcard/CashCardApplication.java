@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CashCardApplication {
 
 	public static void main(String[] args) {
+		System.out.println("testing git commit");
 		SpringApplication.run(CashCardApplication.class, args);
 	}
 
